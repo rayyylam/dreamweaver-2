@@ -1,18 +1,19 @@
 import React from 'react';
 import { DreamEntry } from '../types';
-import { BookOpen, Calendar, Film, Moon, Sparkles } from 'lucide-react';
+import { BookOpen, Calendar, Film, Moon, Sparkles, Trash2 } from 'lucide-react';
 
 interface DreamListProps {
   dreams: DreamEntry[];
   onSelectDream: (dream: DreamEntry) => void;
+  onDeleteDream: (dreamId: string) => void;
 }
 
-const DreamList: React.FC<DreamListProps> = ({ dreams, onSelectDream }) => {
+const DreamList: React.FC<DreamListProps> = ({ dreams, onSelectDream, onDeleteDream }) => {
   if (dreams.length === 0) {
     return (
       <div className="text-center py-20 opacity-70 flex flex-col items-center animate-fade-in">
         <div className="bg-forest-800/50 border border-teal-500/20 p-6 rounded-full mb-6 shadow-[0_0_20px_rgba(45,212,191,0.1)]">
-           <Moon size={48} className="text-teal-400" />
+          <Moon size={48} className="text-teal-400" />
         </div>
         <p className="text-2xl font-serif text-starlight-50 mb-2">梦境博物馆还是空的</p>
         <p className="text-teal-200/60 font-serif">今晚睡个好觉，期待明早的碎片。</p>
@@ -23,8 +24,8 @@ const DreamList: React.FC<DreamListProps> = ({ dreams, onSelectDream }) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-20 animate-fade-in">
       {dreams.map((dream, idx) => (
-        <div 
-          key={dream.id} 
+        <div
+          key={dream.id}
           onClick={() => onSelectDream(dream)}
           style={{ animationDelay: `${idx * 150}ms` }}
           className="group glass-panel-dark p-6 rounded-2xl hover:shadow-[0_10px_40px_-10px_rgba(45,212,191,0.3)] hover:-translate-y-1 hover:border-teal-400/30 transition-all duration-500 cursor-pointer flex flex-col h-full animate-fade-in relative overflow-hidden"
@@ -63,8 +64,18 @@ const DreamList: React.FC<DreamListProps> = ({ dreams, onSelectDream }) => {
           <p className="text-teal-100/70 text-sm line-clamp-3 font-serif leading-relaxed mb-4 flex-1">
             {dream.association}
           </p>
-          
-          <div className="mt-auto pt-4 border-t border-dashed border-teal-500/20 flex justify-end">
+
+          <div className="mt-auto pt-4 border-t border-dashed border-teal-500/20 flex justify-between items-center">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDeleteDream(dream.id);
+              }}
+              className="text-teal-500/50 hover:text-red-400 transition-colors p-1 rounded hover:bg-red-500/10"
+              title="删除梦境"
+            >
+              <Trash2 size={16} />
+            </button>
             <span className="text-lotus-300 text-sm font-semibold group-hover:translate-x-1 transition-transform flex items-center font-serif group-hover:text-lotus-200">
               查看解读 <span className="ml-1 text-lg">→</span>
             </span>

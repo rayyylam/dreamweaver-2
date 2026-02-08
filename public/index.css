@@ -1,0 +1,84 @@
+/* 移动端动态背景样式 */
+
+.mobile-bg-container {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* 背景图片层 */
+.mobile-bg-image {
+  position: absolute;
+  inset: 0;
+  background-image: url('/mobile-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 波纹 Canvas 层 */
+.mobile-bg-ripples {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* 渐变遮罩层 - 仅底部轻微遮罩确保可读性 */
+.mobile-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      transparent 0%,
+      transparent 60%,
+      rgba(5, 26, 26, 0.3) 100%);
+  pointer-events: none;
+}
+
+/* 呼吸动画已禁用 */
+
+/* 仅在移动端显示背景 */
+@media (min-width: 768px) {
+  .mobile-bg-container {
+    display: none;
+  }
+}
+
+/* 闪烁星光点缀 */
+.mobile-bg-container::before,
+.mobile-bg-container::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(94, 234, 212, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(94, 234, 212, 0.6);
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.mobile-bg-container::before {
+  top: 15%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.mobile-bg-container::after {
+  top: 25%;
+  right: 15%;
+  animation-delay: 1.5s;
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}

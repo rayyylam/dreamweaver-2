@@ -1,142 +1,141 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>织梦者 DreamWeaver</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Using Noto Serif SC for Chinese serif support -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Nunito', 'sans-serif'],
-              serif: ['"Noto Serif SC"', 'serif'],
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>织梦者 DreamWeaver</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Using Noto Serif SC for Chinese serif support -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&family=Nunito:wght@400;600;700&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Nunito', 'sans-serif'],
+            serif: ['"Noto Serif SC"', 'serif'],
+          },
+          colors: {
+            // Deep Forest / Mystic Pond Theme
+            forest: {
+              950: '#051a1a', // Deepest background
+              900: '#0a2625',
+              800: '#113a38',
+              700: '#1a524e',
             },
-            colors: {
-              // Deep Forest / Mystic Pond Theme
-              forest: {
-                950: '#051a1a', // Deepest background
-                900: '#0a2625',
-                800: '#113a38',
-                700: '#1a524e',
-              },
-              teal: {
-                400: '#5eead4', // Glowing accents
-                500: '#2dd4bf',
-                600: '#0d9488',
-                900: '#134e4a',
-              },
-              lotus: {
-                200: '#fbcfe8', // Pale pink highlight
-                300: '#f9a8d4', // Pink accents
-                400: '#f472b6',
-                500: '#ec4899',
-              },
-              starlight: {
-                50: '#f0fdfa', // Text
-                100: '#ccfbf1',
-                200: '#99f6e4',
-              }
+            teal: {
+              400: '#5eead4', // Glowing accents
+              500: '#2dd4bf',
+              600: '#0d9488',
+              900: '#134e4a',
             },
-            animation: {
-              'fade-in': 'fadeIn 1s ease-out forwards',
-              'float': 'float 8s ease-in-out infinite',
-              'float-delayed': 'float 8s ease-in-out 4s infinite',
-              'sway': 'sway 6s ease-in-out infinite',
-              'sway-slow': 'sway 10s ease-in-out infinite',
-              'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
-              'ripple': 'ripple 8s linear infinite',
+            lotus: {
+              200: '#fbcfe8', // Pale pink highlight
+              300: '#f9a8d4', // Pink accents
+              400: '#f472b6',
+              500: '#ec4899',
             },
-            keyframes: {
-              fadeIn: {
-                '0%': { opacity: '0', transform: 'translateY(10px) scale(0.98)' },
-                '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
-              },
-              float: {
-                '0%, 100%': { transform: 'translateY(0)' },
-                '50%': { transform: 'translateY(-15px)' },
-              },
-              sway: {
-                '0%, 100%': { transform: 'rotate(-1deg)' },
-                '50%': { transform: 'rotate(1deg)' },
-              },
-              pulseGlow: {
-                '0%, 100%': { opacity: '0.6', filter: 'brightness(1)' },
-                '50%': { opacity: '1', filter: 'brightness(1.3)' },
-              },
-              ripple: {
-                '0%': { transform: 'scale(1)', opacity: '0.3' },
-                '100%': { transform: 'scale(2.5)', opacity: '0' },
-              }
+            starlight: {
+              50: '#f0fdfa', // Text
+              100: '#ccfbf1',
+              200: '#99f6e4',
+            }
+          },
+          animation: {
+            'fade-in': 'fadeIn 1s ease-out forwards',
+            'float': 'float 8s ease-in-out infinite',
+            'float-delayed': 'float 8s ease-in-out 4s infinite',
+            'sway': 'sway 6s ease-in-out infinite',
+            'sway-slow': 'sway 10s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+            'ripple': 'ripple 8s linear infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(10px) scale(0.98)' },
+              '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' },
+            },
+            sway: {
+              '0%, 100%': { transform: 'rotate(-1deg)' },
+              '50%': { transform: 'rotate(1deg)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.6', filter: 'brightness(1)' },
+              '50%': { opacity: '1', filter: 'brightness(1.3)' },
+            },
+            ripple: {
+              '0%': { transform: 'scale(1)', opacity: '0.3' },
+              '100%': { transform: 'scale(2.5)', opacity: '0' },
             }
           }
         }
       }
-    </script>
-    <style>
-      body {
-        background-color: #051a1a;
-        color: #f0fdfa;
-        /* Deep gradient mimicking a pond at night */
-        background: radial-gradient(circle at 50% 120%, #1a524e 0%, #051a1a 70%);
-        min-height: 100vh;
-        overflow-x: hidden;
-      }
-      
-      /* Texture Overlay for that "Oil Painting" grain */
-      body::before {
-        content: "";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
-        pointer-events: none;
-        z-index: 50;
-      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #051a1a;
+      color: #f0fdfa;
+      /* Deep gradient mimicking a pond at night */
+      background: radial-gradient(circle at 50% 120%, #1a524e 0%, #051a1a 70%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-      .glass-panel-dark {
-        background: rgba(10, 38, 37, 0.4);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(94, 234, 212, 0.15); /* Teal tint border */
-        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-      }
-      
-      .glass-input {
-        background: rgba(0, 0, 0, 0.2);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: #f0fdfa;
-      }
-      .glass-input:focus {
-        background: rgba(0, 0, 0, 0.3);
-        border-color: rgba(94, 234, 212, 0.5);
-      }
+    /* 纹理覆盖层已移除 */
 
-      /* Custom scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent; 
-      }
-      ::-webkit-scrollbar-thumb {
-        background: rgba(94, 234, 212, 0.2); 
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: rgba(94, 234, 212, 0.4); 
-      }
-    </style>
+    .glass-panel-dark {
+      background: rgba(10, 38, 37, 0.4);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(94, 234, 212, 0.15);
+      /* Teal tint border */
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    }
 
-<link rel="stylesheet" href="/index.css">
+    .glass-input {
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #f0fdfa;
+    }
+
+    .glass-input:focus {
+      background: rgba(0, 0, 0, 0.3);
+      border-color: rgba(94, 234, 212, 0.5);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(94, 234, 212, 0.2);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(94, 234, 212, 0.4);
+    }
+  </style>
+
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
+
+<body>
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>

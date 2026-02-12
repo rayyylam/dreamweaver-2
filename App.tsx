@@ -6,8 +6,9 @@ import DreamInsights from './components/DreamInsights';
 import MobileBackground from './components/MobileBackground';
 import LoginPage from './components/LoginPage';
 import { dreamService } from './services/dreamService';
+import { generateDreamReflection } from './services/geminiService';
 import { supabase } from './services/supabaseClient';
-import { Moon, Plus, BarChart2, BookHeart, ArrowLeft, Sparkles, Wind, Loader2, LogOut } from 'lucide-react';
+import { Moon, Plus, BarChart2, BookHeart, ArrowLeft, Sparkles, Wind, Loader2, LogOut, RefreshCw } from 'lucide-react';
 import { User } from '@supabase/supabase-js';
 
 // Ambient Background Component
@@ -34,6 +35,7 @@ const App: React.FC = () => {
   const [selectedDream, setSelectedDream] = useState<DreamEntry | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isReflecting, setIsReflecting] = useState(false);
 
   // 认证状态
   const [user, setUser] = useState<User | null>(null);
@@ -121,6 +123,28 @@ const App: React.FC = () => {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
+  };
+
+  const handleReReflect = async () => {
+    if (!selectedDream || isReflecting) return;
+    setIsReflecting(true);
+    try {
+      const reflection = await generateDreamReflection({
+        keywords: selectedDream.keywords,
+        decoding: selectedDream.decoding,
+        association: selectedDream.association,
+      });
+      // 更新数据库
+      await dreamService.update(selectedDream.id, { aiReflection: reflection } as Partial<DreamEntry>);
+      // 更新本地状态
+      const updated = { ...selectedDream, aiReflection: reflection };
+      setSelectedDream(updated);
+      setDreams(prev => prev.map(d => d.id === updated.id ? updated : d));
+    } catch (e) {
+      console.error('Re-reflect failed:', e);
+    } finally {
+      setIsReflecting(false);
+    }
   };
 
   // 认证加载中
@@ -279,17 +303,36 @@ const App: React.FC = () => {
                 </section>
               </div>
 
-              {selectedDream.aiReflection && (
-                <section className="bg-gradient-to-br from-forest-800/40 to-teal-900/20 border border-teal-500/20 p-8 rounded-3xl relative shadow-lg mt-8 backdrop-blur-md">
-                  <BookHeart className="absolute top-8 right-8 text-lotus-400 opacity-50" size={32} />
-                  <h3 className="text-xl font-serif text-starlight-50 mb-6 font-semibold flex items-center gap-2">
+              <section className="bg-gradient-to-br from-forest-800/40 to-teal-900/20 border border-teal-500/20 p-8 rounded-3xl relative shadow-lg mt-8 backdrop-blur-md">
+                <BookHeart className="absolute top-8 right-8 text-lotus-400 opacity-50" size={32} />
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-xl font-serif text-starlight-50 font-semibold flex items-center gap-2">
                     <Sparkles size={20} className="text-lotus-400 animate-pulse" /> 解读与回响
                   </h3>
+                  <button
+                    onClick={handleReReflect}
+                    disabled={isReflecting}
+                    className="flex items-center gap-1.5 text-sm text-teal-400 hover:text-white transition bg-forest-900/50 hover:bg-forest-900 px-3 py-1.5 rounded-full border border-teal-500/30 disabled:opacity-50"
+                  >
+                    {isReflecting ? (
+                      <><Loader2 className="animate-spin" size={14} /><span>解读中...</span></>
+                    ) : (
+                      <><RefreshCw size={14} /><span>重新解读</span></>
+                    )}
+                  </button>
+                </div>
+                {isReflecting ? (
+                  <div className="h-32 flex items-center justify-center text-teal-300 font-serif">
+                    <p className="animate-pulse">正在聆听潜意识的声音...</p>
+                  </div>
+                ) : selectedDream.aiReflection ? (
                   <p className="text-starlight-100/90 font-serif leading-loose whitespace-pre-line text-lg">
                     {selectedDream.aiReflection}
                   </p>
-                </section>
-              )}
+                ) : (
+                  <p className="text-teal-300/60 font-serif text-center py-8">点击「重新解读」获取 AI 解读</p>
+                )}
+              </section>
 
             </div>
           </div>
